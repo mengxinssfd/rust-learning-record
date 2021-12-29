@@ -17,3 +17,6 @@ Cargo.lock
 *.njsproj
 *.sln
 *.sw?
+
+
+.DS_Store
