@@ -1,3 +1,9 @@
+mod option_test;
+mod mod_test;
+mod match_test;
+mod string_test;
+
+
 #[derive(Debug)]
 struct Rectangle {
     w: i32,
@@ -25,8 +31,13 @@ enum State {
 
 
 #[warn(dead_code)]
+#[allow(unused_variables)]
 fn main() {
+
     let s = String::from("hello world");
+    let mut chars = s.chars();
+    println!("s[0] {:?}", chars.nth(0).unwrap()); // h
+    println!("s[0] {:?}", chars.nth(0).unwrap()); // e  h不能在用了
     // println!("length:{}", s.len()); // 11
     assert_eq!(s.len(), 11);
     // println!("{}", s[0]); // error
@@ -58,7 +69,12 @@ fn main() {
     println!("arr slice {:?}", &arr[1..3]); // [2,3]
 
     let v = vec![1, 2, 3];
-    println!("ver[1] {}", v[1]); // 2
+    println!("ver[1] {}", &v[1]); // 2
+    let f: i32 =  match v.get(5) {
+        Some(&num) => num,
+        None => 5
+    };
+    println!("ver[5] {}", f); // 2
     println!("ver slice {:?}", &v[1..3]); // [2,3]
 
     let t = (1, 2, 3);
@@ -84,6 +100,24 @@ fn main() {
     println!("square area {}", sq.area());
 
     println!("enum OK {}", State::OK as i32);
+    println!("enum OK {}", State::NotFound as i32);
+
+    println!("{:?}", Some(5).unwrap());
+
+
+    println!("-------------mode test-------------");
+    mod_test::main();
+    println!("-------------mode test-------------\n");
+    println!("-------------match_test-------------");
+    match_test::match_test();
+    println!("-------------match_test-------------\n");
+    println!("-------------string_test-------------");
+    string_test::string_test();
+    println!("-------------string_test-------------\n");
+    println!("-------------option_test-------------");
+    option_test::main();
+    println!("-------------option_test-------------");
+
 }
 
 // 不可修改值
