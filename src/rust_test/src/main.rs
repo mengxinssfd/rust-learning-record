@@ -2,6 +2,7 @@ mod option_test;
 mod mod_test;
 mod match_test;
 mod string_test;
+mod map_test;
 
 
 #[derive(Debug)]
@@ -114,6 +115,9 @@ fn main() {
     println!("-------------string_test-------------");
     string_test::string_test();
     println!("-------------string_test-------------\n");
+    println!("-------------map_test-------------");
+    map_test::map_test();
+    println!("-------------map_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
