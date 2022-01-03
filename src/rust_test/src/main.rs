@@ -1,12 +1,12 @@
 use std::fmt::Binary;
 
-mod option_test;
-mod mod_test;
-mod match_test;
-mod string_test;
+mod lifetime_test;
 mod map_test;
+mod match_test;
+mod mod_test;
+mod option_test;
+mod string_test;
 mod type_test;
-
 
 #[derive(Debug)]
 struct Rectangle {
@@ -33,16 +33,16 @@ enum State {
     NotFound = 404,
 }
 
-
 #[warn(dead_code)]
 #[allow(unused_variables)]
 fn main() {
+    assert_ne!(0.1 + 0.2, 0.3); // 0.1 + 0.2 = 0.3000000000004
 
     let s = String::from("hello world");
     let mut chars = s.chars();
     println!("s[0] {:?}", chars.nth(0).unwrap()); // h
     println!("s[0] {:?}", chars.nth(0).unwrap()); // e  h不能在用了
-    // println!("length:{}", s.len()); // 11
+                                                  // println!("length:{}", s.len()); // 11
     assert_eq!(s.len(), 11);
     // println!("{}", s[0]); // error
     println!("slice切片:{}", &s[0..5]); // "hello"
@@ -74,9 +74,9 @@ fn main() {
 
     let v = vec![1, 2, 3];
     println!("ver[1] {}", &v[1]); // 2
-    let f: i32 =  match v.get(5) {
+    let f: i32 = match v.get(5) {
         Some(&num) => num,
-        None => 5
+        None => 5,
     };
     println!("ver[5] {}", f); // 2
     println!("ver slice {:?}", &v[1..3]); // [2,3]
@@ -111,7 +111,6 @@ fn main() {
     // let parse:dyn Binary = "10".parse().unwrap();
     // println!("parse {}", parse);
 
-
     println!("-------------mode test-------------");
     mod_test::main();
     println!("-------------mode test-------------\n");
@@ -127,10 +126,12 @@ fn main() {
     println!("-------------type_test-------------");
     type_test::main();
     println!("-------------type_test-------------");
+    println!("-------------lifetime_test-------------");
+    lifetime_test::main();
+    println!("-------------lifetime_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
-
 }
 
 // 不可修改值
