@@ -1,8 +1,11 @@
+use std::fmt::Binary;
+
 mod option_test;
 mod mod_test;
 mod match_test;
 mod string_test;
 mod map_test;
+mod type_test;
 
 
 #[derive(Debug)]
@@ -105,6 +108,9 @@ fn main() {
 
     println!("{:?}", Some(5).unwrap());
 
+    // let parse:dyn Binary = "10".parse().unwrap();
+    // println!("parse {}", parse);
+
 
     println!("-------------mode test-------------");
     mod_test::main();
@@ -118,6 +124,9 @@ fn main() {
     println!("-------------map_test-------------");
     map_test::map_test();
     println!("-------------map_test-------------");
+    println!("-------------type_test-------------");
+    type_test::main();
+    println!("-------------type_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
