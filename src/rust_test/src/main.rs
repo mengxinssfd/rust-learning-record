@@ -1,5 +1,3 @@
-use std::fmt::Binary;
-
 mod lifetime_test;
 mod map_test;
 mod match_test;
@@ -7,25 +5,8 @@ mod mod_test;
 mod option_test;
 mod string_test;
 mod type_test;
+mod struct_test;
 
-#[derive(Debug)]
-struct Rectangle {
-    w: i32,
-    h: i32,
-}
-
-impl Rectangle {
-    // 方法
-    fn area(&self) -> i32 {
-        self.w * self.h
-    }
-    // 关联函数
-    fn square(size: i32) -> Rectangle {
-        Rectangle { w: size, h: size }
-    }
-}
-// 可以多个实现
-impl Rectangle {}
 
 #[derive(Debug)]
 enum State {
@@ -84,24 +65,6 @@ fn main() {
     let t = (1, 2, 3);
     println!("t.0 {}", t.0); // 1
 
-    let p = Rectangle { w: 10, h: 20 };
-    println!("x:{}", p.w);
-
-    // 解构不像js能放后面覆盖前面，在rust里面解构不能覆盖值
-    let p2 = Rectangle { w: 30, ..p };
-    println!("x:{},y:{}", p2.w, p2.h);
-    println!("area {}", area(&p2));
-    println!("area {}", p2.area());
-    // 加了#[derive(Debug)]才能打印结构体
-    println!("p2 {:?}", p2); // 行内
-    println!("p2 {:#?}", p2); // 多行
-
-    // let ac = area_closure(&p2);
-    // println!("ac {}", ac().w)
-
-    let sq = Rectangle::square(20);
-    println!("square {:#?}", sq);
-    println!("square area {}", sq.area());
 
     println!("enum OK {}", State::OK as i32);
     println!("enum OK {}", State::NotFound as i32);
@@ -129,26 +92,10 @@ fn main() {
     println!("-------------lifetime_test-------------");
     lifetime_test::main();
     println!("-------------lifetime_test-------------");
+    println!("-------------struct_test-------------");
+    struct_test::main();
+    println!("-------------struct_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
 }
-
-// 不可修改值
-fn area(r: &Rectangle) -> i32 {
-    // r.w = 10; // error
-    r.w * r.h
-}
-
-// 可修改值
-// fn area(r: &mut Rectangle) -> i32 {
-//     r.w = 10;
-//     r.w * r.h
-// }
-
-// 用不了，不能像js那样返回一个闭包
-/*fn area_closure(r: &Rectangle) -> fn() -> &'static Rectangle {
-    || {
-        &r
-    }
-}*/

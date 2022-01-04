@@ -49,6 +49,7 @@ pub fn main() {
         .expect("Could not find a '.'");
     let i = ImportantExcerpt { part: first_sentence };
     println!("{:#?}", i);
+    println!("{}", i.part);
 
 
     // 报错

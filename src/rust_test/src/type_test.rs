@@ -81,13 +81,13 @@ fn call_impl_test2<T: TestTrait>(ins: &T) {
 // 限制参数必须实现TestTrait和TestTrait2  方法1：impl TestTrait + TestTrait2
 fn call_impl_test3(ins: &(impl TestTrait + TestTrait2)) {
     println!("call_impl_test3 start");
-    &ins.show2();
+    ins.show2();
     println!("call_impl_test3 end\n");
 }
 // 限制参数必须实现TestTrait和TestTrait2  方法1：impl TestTrait
 fn call_impl_test4<T: TestTrait + TestTrait2>(ins: &T) {
     println!("call_impl_test4 start");
-    &ins.show2();
+    ins.show2();
     println!("call_impl_test4 end\n");
 }
 
@@ -102,7 +102,7 @@ where
     T: TestTrait + TestTrait2,
 {
     println!("call_impl_test5 start");
-    &ins.show2();
+    ins.show2();
     println!("call_impl_test5 end\n");
 }
 
