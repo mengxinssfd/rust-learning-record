@@ -6,6 +6,8 @@ mod option_test;
 mod string_test;
 mod type_test;
 mod struct_test;
+mod closure_test;
+mod iterator_test;
 
 
 #[derive(Debug)]
@@ -95,6 +97,12 @@ fn main() {
     println!("-------------struct_test-------------");
     struct_test::main();
     println!("-------------struct_test-------------");
+    println!("-------------closure_test-------------");
+    closure_test::main();
+    println!("-------------closure_test-------------");
+    println!("-------------iterator_test-------------");
+    iterator_test::main();
+    println!("-------------iterator_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");

@@ -23,12 +23,14 @@ pub fn match_test() {
     }
     println!("count {}", count);
 }
+
+#[allow(unused)]
 #[derive(Debug)]
 enum UsState {
     Alabama,
     Alaska,
 }
-
+#[allow(unused)]
 enum Coin {
     Penny,
     Nickel,

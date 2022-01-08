@@ -1,9 +1,11 @@
 #[derive(Debug)]
 pub struct Rectangle {
-    pub w: i32,  // 外部引入时w需要设置为pub才能读写
+    pub w: i32,
+    // 外部引入时w需要设置为pub才能读写
     pub h: i32,
 }
 
+#[allow(unused)]
 impl Rectangle {
     pub fn new(w: i32, h: i32) -> Rectangle {
         Rectangle { w, h }
@@ -19,7 +21,12 @@ impl Rectangle {
 }
 
 // 可以多个实现
-impl Rectangle {}
+impl Rectangle {
+    // 不能声明一样的函数 会报错
+    /*pub fn square(size: u32) -> Rectangle {
+        Rectangle { w: (size * 2) as i32, h: (size * 2) as i32 }
+    }*/
+}
 
 pub fn main() {
     let p = Rectangle { w: 10, h: 20 };
@@ -40,6 +47,11 @@ pub fn main() {
     let sq = Rectangle::square(20);
     println!("square {:#?}", sq);
     println!("square area {}", sq.area());
+
+    // 不能重载函数
+    /*let sq = Rectangle::square(20 as u32);
+    println!("square {:#?}", sq);
+    println!("square area {}", sq.area());*/
 }
 
 
