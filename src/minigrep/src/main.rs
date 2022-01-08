@@ -24,7 +24,8 @@ fn main() {
      }; */
 
     let config = minigrep::Config::new(&args).unwrap_or_else(|e| {
-        println!("Problem parsing arguments: {}", e);
+        // eprintln 保存输出信息时不会保存eprintln的输出
+        eprintln!("Problem parsing arguments: {}", e);
         process::exit(1);
     });
 
@@ -33,7 +34,7 @@ fn main() {
 
     // 用if let
     if let Err(e) = minigrep::run(config) {
-        println!("Application error: {}", e);
+        eprintln!("Application error: {}", e);
         process::exit(1);
     }
 }
