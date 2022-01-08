@@ -2,6 +2,10 @@ use minigrep;
 use std::{env, process};
 
 // https://kaisery.github.io/trpl-zh-cn/ch12-03-improving-error-handling-and-modularity.html
+
+// 输出信息保存到文件
+// cargo run to poem.txt > output.txt
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     // 用"_"代替，不会检查该变量是否使用
