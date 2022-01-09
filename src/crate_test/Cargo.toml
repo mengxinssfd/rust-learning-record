@@ -1,0 +1,19 @@
+[package]
+name = "crate_test"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+art = {path = "./art"}
+
+# opt-level:0-3
+[profile.dev]
+opt-level = 0 # 编译速度快，但编译后的性能不好
+
+[profile.release]
+opt-level = 3  # 编译速度慢，但编译后的性能好
+
+[workspace]
+members = ["art"]
