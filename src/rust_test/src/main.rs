@@ -26,7 +26,7 @@ fn main() {
     let mut chars = s.chars();
     println!("s[0] {:?}", chars.nth(0).unwrap()); // h
     println!("s[0] {:?}", chars.nth(0).unwrap()); // e  h不能在用了
-                                                  // println!("length:{}", s.len()); // 11
+    // println!("length:{}", s.len()); // 11
     assert_eq!(s.len(), 11);
     // println!("{}", s[0]); // error
     println!("slice切片:{}", &s[0..5]); // "hello"
@@ -77,6 +77,8 @@ fn main() {
     // let parse:dyn Binary = "10".parse().unwrap();
     // println!("parse {}", parse);
 
+    test_for_each();
+
     println!("-------------mode test-------------");
     mod_test::main();
     println!("-------------mode test-------------\n");
@@ -110,4 +112,16 @@ fn main() {
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
+}
+
+fn test_for_each() {
+    (0..5).for_each(|i| {
+        println!("for_each {}", i);
+    });
+    for i in 0..5 {
+        println!("for in {}", i);
+        if i == 3 {
+            break
+        }
+    }
 }
