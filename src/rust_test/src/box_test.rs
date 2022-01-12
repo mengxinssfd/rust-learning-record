@@ -236,6 +236,8 @@ mod tests {
     }
 }
 
+// 类似于js的一个对象到处传，然后改了对象中的某个值，其他依赖了该对象的地方全都改变了
+// RefCell<T> 只能用于单线程场景。如果尝试在多线程上下文中使用RefCell<T>，会得到一个编译错误
 fn use_rc_and_ref_cell(){
     #[derive(Debug)]
     enum List {
@@ -260,3 +262,7 @@ fn use_rc_and_ref_cell(){
     println!("b after = {:?}", b);
     println!("c after = {:?}", c);
 }
+
+// - Rc<T> 允许相同数据有多个所有者；Box<T> 和 RefCell<T> 有单一所有者。
+// - Box<T> 允许在编译时执行不可变或可变借用检查；Rc<T>仅允许在编译时执行不可变借用检查；RefCell<T> 允许在运行时执行不可变或可变借用检查。
+// - 因为 RefCell<T> 允许在运行时执行可变借用检查，所以我们可以在即便 RefCell<T> 自身是不可变的情况下修改其内部的值。
