@@ -8,7 +8,7 @@ mod type_test;
 mod struct_test;
 mod closure_test;
 mod iterator_test;
-mod box_test;
+mod smart_pointer_test;
 
 
 #[derive(Debug)]
@@ -106,9 +106,9 @@ fn main() {
     println!("-------------iterator_test-------------");
     iterator_test::main();
     println!("-------------iterator_test-------------");
-    println!("-------------box_test-------------");
-    box_test::main();
-    println!("-------------box_test-------------");
+    println!("-------------smart_pointer_test-------------");
+    smart_pointer_test::main();
+    println!("-------------smart_pointer_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
