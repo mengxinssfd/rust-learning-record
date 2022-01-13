@@ -107,9 +107,12 @@ fn main() {
     println!("-------------iterator_test-------------");
     iterator_test::main();
     println!("-------------iterator_test-------------");
-    println!("-------------box_test-------------");
-    box_test::main();
-    println!("-------------box_test-------------");
+    println!("-------------smart_pointer_test-------------");
+    smart_pointer_test::main();
+    println!("-------------smart_pointer_test-------------");
+    println!("-------------thread_test-------------");
+    thread_test::main();
+    println!("-------------thread_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
