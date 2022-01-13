@@ -2,7 +2,7 @@
 // mod tests {
 extern crate rust_test; // rust_test是项目名
 
-use rust_test::*;  // 只能导入src/lib.rs下的文件
+use rust_test::*; // 只能导入src/lib.rs下的文件
 
 #[test]
 fn it_works() {
@@ -23,6 +23,11 @@ fn rectangle_test() {
     assert_eq!(s.h, 30);
     assert_eq!(s.h, 30);
     assert_eq!(s.h, 30);
+    // 看来并不是比较地址值
+    assert_eq!(1, 1);
+    assert_eq!(&1, &1);
+    assert_eq!(&String::from("1"), &"1".to_string());
+    assert_ne!(&String::from("1"), &"12".to_string());
 }
 
 #[test]
@@ -57,10 +62,13 @@ fn expensive_test() {
     // 需要运行一个小时的代码
 }
 
-
 fn panic_test(num: i32) -> i32 {
-    if num <= 0 { panic!("num should great then 0") };
-    if num >= 100 { panic!("num should less then 100") };
+    if num <= 0 {
+        panic!("num should great then 0")
+    };
+    if num >= 100 {
+        panic!("num should less then 100")
+    };
     num
 }
 /*
