@@ -10,6 +10,7 @@ mod closure_test;
 mod iterator_test;
 mod smart_pointer_test;
 mod thread_test;
+mod oo_test;
 
 
 #[derive(Debug)]
@@ -113,6 +114,9 @@ fn main() {
     println!("-------------thread_test-------------");
     thread_test::main();
     println!("-------------thread_test-------------");
+    println!("-------------oo_test-------------");
+    oo_test::main();
+    println!("-------------oo_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
