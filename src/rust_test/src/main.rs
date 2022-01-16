@@ -85,7 +85,7 @@ fn main() {
     mod_test::main();
     println!("-------------mode test-------------\n");
     println!("-------------match_test-------------");
-    match_test::match_test();
+    match_test::main();
     println!("-------------match_test-------------\n");
     println!("-------------string_test-------------");
     string_test::string_test();
