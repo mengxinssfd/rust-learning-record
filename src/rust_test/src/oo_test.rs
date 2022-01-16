@@ -32,6 +32,7 @@ fn demo_1() {
     }
 }
 
+// 面向对象模式
 fn demo_2() {
     trait State {
         fn content<'a>(&self, post: &'a Post) -> &'a str {
@@ -101,16 +102,17 @@ fn demo_2() {
     assert_eq!("", post.content());
 }
 
-// TODO 未完
+// 非面向对象
 fn demo_3() {
     pub struct Post {
         content: String,
     }
-
     pub struct DraftPost {
         content: String,
     }
-
+    pub struct PendingReviewPost {
+        content: String,
+    }
     impl Post {
         pub fn new() -> DraftPost {
             DraftPost {
@@ -122,7 +124,6 @@ fn demo_3() {
             &self.content
         }
     }
-
     impl DraftPost {
         pub fn add_text(&mut self, text: &str) {
             self.content.push_str(text);
@@ -133,4 +134,20 @@ fn demo_3() {
             }
         }
     }
+    impl PendingReviewPost {
+        fn approve(self) -> Post {
+            Post {
+                content: self.content,
+            }
+        }
+    }
+
+    let mut post = Post::new();
+    post.add_text("I ate a salad for lunch today");
+
+    let post = post.request_review();
+
+    let post = post.approve();
+
+    assert_eq!("I ate a salad for lunch today", post.content());
 }
