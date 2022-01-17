@@ -131,7 +131,7 @@ fn demo_8() {
         // 匹配除了50和None的任何值
         Some(y) => println!("Matched, y = {:?}", y), // 内部变量y，与外部y无关
         // 匹配以上匹配值以外的任何值，包括None
-        _ => println!("Default case, x = {:?}", x)
+        _ => println!("Default case, x = {:?}", x),
     }
     println!("at the end: x = {:?}, y = {:?}", x, y);
 }
@@ -144,14 +144,14 @@ fn demo_9() {
             // 相当于 1 <= x <= 5
             // 相当于rust的 1|2|3|4|5
             1..=5 => println!("one through five {}", x),
-            _ => println!("something else {}", x)
+            _ => println!("something else {}", x),
         }
     }
     fn mc_char(x: char) {
         match x {
             'a'..='j' => println!("early ASCII letter"),
             'k'..='z' => println!("late ASCII letter"),
-            _ => println!("something else")
+            _ => println!("something else"),
         }
     }
     mc(5);
@@ -191,6 +191,31 @@ fn demo_10() {
     }
 
     println!("-match_test-demo_10-");
+}
+
+// 解构枚举
+fn demo_11() {
+    enum Message {
+        Quit,
+        Move { x: i32, y: i32 },
+        Write(String),
+        ChangeColor(i32, i32, i32),
+    }
+
+    let msg = Message::ChangeColor(0, 160, 255);
+
+    match msg {
+        Message::Quit => {
+            println!("The Quit variant has no data to destructure.")
+        }
+        Message::Move { x, y } => {
+            println!("Move in the x direction {} and in the y direction {}", x, y);
+        }
+        Message::Write(text) => println!("Text message: {}", text),
+        Message::ChangeColor(r, g, b) => {
+            println!("Change the color to red {}, green {}, and blue {}", r, g, b)
+        }
+    }
 }
 
 pub fn main() {
