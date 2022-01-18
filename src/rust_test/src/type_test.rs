@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use std::fmt::Display;
 
 struct Point<T> {
@@ -28,11 +30,13 @@ impl Point<f32> {
 struct Test {
     value: i32,
 }
+
 impl Test {
     pub fn new(value: i32) -> Test {
         Test { value }
     }
 }
+
 // trait 类似接口（interface）
 pub trait TestTrait {
     fn show_value(&self) -> i32;
@@ -40,12 +44,14 @@ pub trait TestTrait {
         println!("trait show test value:{}", self.show_value());
     }
 }
+
 pub trait TestTrait2 {
     fn show_value2(&self) -> i32;
     fn show2(&self) {
         println!("trait2 show test value:{}", self.show_value2());
     }
 }
+
 // 实现trait
 impl TestTrait for Test {
     fn show_value(&self) -> i32 {
@@ -59,6 +65,7 @@ impl TestTrait for Test {
         println!("impl show test value:{}", self.value);
     }
 }
+
 impl TestTrait2 for Test {
     fn show_value2(&self) -> i32 {
         self.value
@@ -72,18 +79,21 @@ fn call_impl_test(ins: &impl TestTrait) {
     ins.show();
     println!("call_impl_test end\n");
 }
+
 // 限制参数必须实现TestTrait 方法2：T: TestTrait
 fn call_impl_test2<T: TestTrait>(ins: &T) {
     println!("call_impl_test2 start");
     ins.show();
     println!("call_impl_test2 end\n");
 }
+
 // 限制参数必须实现TestTrait和TestTrait2  方法1：impl TestTrait + TestTrait2
 fn call_impl_test3(ins: &(impl TestTrait + TestTrait2)) {
     println!("call_impl_test3 start");
     ins.show2();
     println!("call_impl_test3 end\n");
 }
+
 // 限制参数必须实现TestTrait和TestTrait2  方法1：impl TestTrait
 fn call_impl_test4<T: TestTrait + TestTrait2>(ins: &T) {
     println!("call_impl_test4 start");
@@ -98,8 +108,8 @@ fn call_impl_test4<T: TestTrait + TestTrait2>(ins: &T) {
 
 // 限制参数必须实现TestTrait和TestTrait3  方法1：impl TestTrait
 fn call_impl_test5<T>(ins: &T)
-where
-    T: TestTrait + TestTrait2,
+    where
+        T: TestTrait + TestTrait2,
 {
     println!("call_impl_test5 start");
     ins.show2();
@@ -139,8 +149,16 @@ fn largest<T: PartialOrd>(list: &[T]) -> &T {
     &largest
 }
 
-pub fn main() {
 
+// 测试传None值
+fn type_test<T>(v: Option<T>) -> T {
+    match v {
+        Some(x) => x,
+        None => panic!("12123")
+    }
+}
+
+pub fn main() {
     let p = Point { x: 5, y: 10 };
     println!("p.x = {}", p.x());
     p.show();
@@ -163,4 +181,8 @@ pub fn main() {
     let char_list = vec!['y', 'm', 'a', 'q'];
     let result = largest(&char_list);
     println!("The largest char is {}", result);
+
+
+    // 测试传None值  单独的None不行
+    // println!("{:?}", type_test(<Option<()>>::None));
 }
