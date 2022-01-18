@@ -257,6 +257,125 @@ fn demo_13() {
     let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
 }
 
+// 忽略模式中的值
+fn demo_14() {
+    fn foo(_: i32, y: i32) {
+        // println!("This code only uses the y parameter: {}", x); // error `_` not allowed here
+        println!("This code only uses the y parameter: {}", y);
+    }
+
+    foo(3, 4);
+}
+
+// 使用嵌套的 _ 忽略部分值 匹配元组
+fn demo_15() {
+    let mut setting_value = Some(5);
+    // let new_setting_value = Some(10);
+    let new_setting_value = None;
+
+    match (setting_value, new_setting_value) {
+        (Some(_), Some(_)) => {
+            println!("Can't overwrite an existing customized value");
+        }
+        _ => {
+            setting_value = new_setting_value;
+        }
+    }
+
+    println!("setting is {:?}", setting_value);
+}
+
+/// 通过在名字前以一个下划线开头来忽略未使用的变量
+fn demo_16() {
+    let _x = 5;
+    let y = 10;
+
+    /* let s = Some(String::from("Hello!"));
+
+     // error
+     // 我们会得到一个错误，因为 s 的值仍然会移动进 _s，并阻止我们再次使用s。
+     // 然而只使用下划线本身，并不会绑定值。
+     if let Some(_s) = s {
+         println!("found a string");
+     }
+
+     println!("{:?}", s);*/
+}
+
+/// 用 .. 忽略剩余值
+fn demo_17() {
+    // 省略尾部的值
+    struct Point {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+    let origin = Point { x: 0, y: 0, z: 0 };
+    match origin {
+        Point { x, .. } => println!("x is {}", x),
+    }
+
+    // 省略中间的值
+    let numbers = (2, 4, 8, 16, 32);
+    match numbers {
+        (first, .., last) => {
+            println!("Some numbers: {}, {}", first, last);
+        }
+    }
+}
+
+/// 匹配守卫提供的额外条件
+fn demo_18() {
+    let num = Some(10);
+    match num {
+        Some(x) if x > 10 => println!("x > 10"),
+        Some(x) => println!("x {}", x),
+        _ => {}
+    }
+
+    let x = Some(5);
+    let y = 10;
+    match x {
+        Some(50) => println!("Got 50"),
+        Some(n) if n == y => println!("Matched, n = {}", n),
+        _ => println!("Default case, x = {:?}", x),
+    }
+    println!("at the end: x = {:?}, y = {}", x, y);
+
+
+    let x = 4;
+    let y = false;
+
+    match x {
+        4 | 5 | 6 if y => println!("yes"),
+        _ => println!("no"),
+    }
+}
+
+/// @ 绑定
+fn demo_19() {
+    enum Message {
+        Hello { id: i32 },
+    }
+
+    let msg = Message::Hello { id: 5 };
+
+    match msg {
+        // 可以取值
+        Message::Hello { id: id_variable @ 3..=7 } => {
+            println!("Found an id in range: {}", id_variable)
+        }
+        // 不能取值
+        Message::Hello { id: 10..=12 } => {
+            println!("Found an id in another range")
+        }
+        // 可以取值，但没有值范围
+        Message::Hello { id } => {
+            println!("Found some other id: {}", id)
+        }
+    }
+}
+
 pub fn main() {
     demo_1();
     demo_2();
@@ -271,6 +390,12 @@ pub fn main() {
     demo_11();
     demo_12();
     demo_13();
+    demo_14();
+    demo_15();
+    demo_16();
+    demo_17();
+    demo_18();
+    demo_19();
 }
 
 #[derive(Debug)]
