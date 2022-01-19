@@ -12,6 +12,7 @@ mod smart_pointer_test;
 mod thread_test;
 mod oo_test;
 mod unsafe_test;
+mod advanced_traits_test;
 
 
 #[derive(Debug)]
@@ -120,7 +121,11 @@ fn main() {
     println!("-------------oo_test-------------");
     println!("-------------unsafe_test-------------");
     unsafe_test::main();
+    println!("静态变量HELLO_WORLD: {}", unsafe_test::HELLO_WORLD);
     println!("-------------unsafe_test-------------");
+    println!("-------------advanced_traits_test-------------");
+    advanced_traits_test::main();
+    println!("-------------advanced_traits_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
