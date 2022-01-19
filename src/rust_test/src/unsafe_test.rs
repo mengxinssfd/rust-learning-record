@@ -113,8 +113,8 @@ fn demo_4() {
     }
 }
 
-fn demo_5(){
-    // 从其它语言调用 Rust 函数
+// 其它语言调用 Rust 函数
+fn demo_5() {
     // 也可以使用 extern 来创建一个允许其他语言调用 Rust 函数的接口。
     // 不同于 extern 块，就在 fn 关键字之前增加 extern 关键字并指定所用到的 ABI。
     // 还需增加 #[no_mangle] 注解来告诉 Rust 编译器不要 mangle 此函数的名称。
@@ -131,9 +131,41 @@ fn demo_5(){
     // extern 的使用无需 unsafe。
 }
 
+pub static HELLO_WORLD: &str = "hello, world";
+static mut COUNTER: u32 = 1;
+
+// 修改静态变量
+fn demo_6() {
+    println!("name is: {}", HELLO_WORLD);
+
+    fn add_to_count(inc: u32) {
+        unsafe { COUNTER += inc; }
+    }
+
+    add_to_count(20);
+    unsafe { println!("COUNTER: {}", COUNTER); }
+}
+
+// 实现不安全 trait
+fn demo_7() {
+    unsafe trait Foo {
+        fn test(&self);
+    }
+    unsafe impl Foo for i32 {
+        fn test(&self) {
+            println!("unsafe test value: {}", self);
+        }
+    }
+
+    let num = 10;
+    num.test();
+}
+
 pub fn main() {
     demo_1();
     demo_2();
     demo_3();
     demo_4();
+    demo_6();
+    demo_7();
 }
