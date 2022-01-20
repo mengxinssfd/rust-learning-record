@@ -27,7 +27,8 @@ pub mod nested {
 
     // 使用 `pub(in path)` 语法定义的函数只在给定的路径中可见。
     // `path` 必须是父模块（parent module）或祖先模块（ancestor module）
-    // crate相当于根目录
+    // crate相当于根目录 crate可以省略
+    // pub(in ::mod_test::my_mod) fn public_function_in_my_mod() {
     pub(in crate::mod_test::my_mod) fn public_function_in_my_mod() {
         print!("called `my_mod::nested::public_function_in_my_mod()`, that\n > ");
         public_function_in_nested()
