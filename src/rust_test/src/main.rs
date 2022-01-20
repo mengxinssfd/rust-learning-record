@@ -15,6 +15,7 @@ mod unsafe_test;
 mod advanced_traits_test;
 mod advanced_type_test;
 mod advanced_functions_and_closures_test;
+mod macro_test;
 
 
 #[derive(Debug)]
@@ -134,6 +135,9 @@ fn main() {
     println!("-------------advanced_functions_and_closures_test-------------");
     advanced_functions_and_closures_test::main();
     println!("-------------advanced_functions_and_closures_test-------------");
+    println!("-------------macro_test-------------");
+    macro_test::main();
+    println!("-------------macro_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
