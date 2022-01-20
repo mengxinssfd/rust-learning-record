@@ -13,6 +13,8 @@ mod thread_test;
 mod oo_test;
 mod unsafe_test;
 mod advanced_traits_test;
+mod advanced_type_test;
+mod advanced_functions_and_closures_test;
 
 
 #[derive(Debug)]
@@ -126,6 +128,12 @@ fn main() {
     println!("-------------advanced_traits_test-------------");
     advanced_traits_test::main();
     println!("-------------advanced_traits_test-------------");
+    println!("-------------advanced_type_test-------------");
+    advanced_type_test::main();
+    println!("-------------advanced_type_test-------------");
+    println!("-------------advanced_functions_and_closures_test-------------");
+    advanced_functions_and_closures_test::main();
+    println!("-------------advanced_functions_and_closures_test-------------");
     println!("-------------option_test-------------");
     option_test::main();
     println!("-------------option_test-------------");
