@@ -168,4 +168,7 @@ pub fn main() {
     demo_4();
     demo_6();
     demo_7();
+
+    // let num = 10;
+    // num.test(); // error 不能使用
 }
