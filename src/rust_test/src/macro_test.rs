@@ -18,8 +18,13 @@ fn demo_1() {
 
     let v = vec2![1, 2, 3];
     println!("v,{:?}", v);
+
+    let v = vec2!(1, 2, 3);
+    println!("v,{:?}", v);
 }
 
 pub fn main() {
     demo_1();
+    // let v = vec2![1, 2, 3];
+    // println!("v,{:?}", v);
 }
