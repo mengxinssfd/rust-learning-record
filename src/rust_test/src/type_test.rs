@@ -158,6 +158,35 @@ fn type_test<T>(v: Option<T>) -> T {
     }
 }
 
+// struct无泛型  impl有泛型，强制转成某个类型
+fn demo_1() {
+    trait Foo<T> {
+        fn bar(&self, x: &[u16]) -> T;
+    }
+
+    struct A;
+
+    impl Foo<u32> for A {
+        fn bar(&self, x: &[u16]) -> u32 {
+            x.len() as u32
+        }
+    }
+    impl Foo<u8> for A {
+        fn bar(&self, x: &[u16]) -> u8 {
+            x.len() as u8
+        }
+    }
+
+    fn main() {
+        let a = A;
+        println!("1111{}", Foo::<u32>::bar(&a, &[1u16, 2, 3]) == 3u32);
+        // let a = A;
+        println!("1111{}", Foo::<u8>::bar(&a, &[1u16, 2, 3]) == 3u8);
+    }
+
+    main();
+}
+
 pub fn main() {
     let p = Point { x: 5, y: 10 };
     println!("p.x = {}", p.x());
