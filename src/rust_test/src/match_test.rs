@@ -376,6 +376,35 @@ fn demo_19() {
     }
 }
 
+// ref
+fn demo_20(){
+    enum A {
+        M { x: u16, y: String },
+        Y(String),
+    }
+
+    fn use_x_y(x: u16, y: &String) {}
+    // &String可以改为&str
+    // fn use_x_y(x: u16, y: &str) {}
+
+    fn get(input: &A) { // 这行不能修改
+        match input {
+            /* A::M { x, y } => {
+                use_x_y(*x, y); // 有办法去掉x前面的星号嘛？
+            }*/
+            // ref https://rust-by-example.budshome.com/scope/borrow/ref.html#ref-%E6%A8%A1%E5%BC%8F
+            &A::M { x, ref y } => {
+                use_x_y(x, y);
+            }
+            A::Y(y) => {}
+        }
+    }
+    fn main() {
+
+    }
+
+}
+
 pub fn main() {
     demo_1();
     demo_2();
