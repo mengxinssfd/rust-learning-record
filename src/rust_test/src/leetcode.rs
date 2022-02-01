@@ -93,9 +93,9 @@ fn tree() {
                 }
             }
              */
-            for c in s.chars() {
+            s.chars().for_each(|c| {
                 *map.entry(c).or_insert(0) += 1;
-            }
+            });
 
             println!("{:?}", map);
             for (i, c) in s.chars().enumerate() {
