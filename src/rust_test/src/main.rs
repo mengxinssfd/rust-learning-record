@@ -16,6 +16,7 @@ mod advanced_traits_test;
 mod advanced_type_test;
 mod advanced_functions_and_closures_test;
 mod macro_test;
+mod leetcode;
 
 
 #[derive(Debug)]
