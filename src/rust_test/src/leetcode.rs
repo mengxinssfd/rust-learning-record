@@ -129,12 +129,11 @@ fn tree() {
             let mut carry = 0;
             let mut res = String::from("");
 
-            let a = a.chars().collect::<Vec<char>>();
-            let b = b.chars().collect::<Vec<char>>();
             while len1 > -1 || len2 > -1 {
-                let num1 = *a.get(len1 as usize).unwrap_or(&'0');
+                let num1 = a.chars().nth(len1 as usize).unwrap_or('0');
+                println!("{}, {}", len1, num1);
                 let num1 = num1.to_digit(10).unwrap();
-                let num2 = *b.get(len2 as usize).unwrap_or(&'0');
+                let num2 = b.chars().nth(len2 as usize).unwrap_or('0');
                 let num2 = num2.to_digit(10).unwrap();
 
                 let mut val = num1 + num2 + carry;
@@ -160,13 +159,22 @@ mod test {
     use crate::leetcode::Solution;
     #[test]
     fn add_binary() {
-        assert_eq!(
+         assert_eq!(
             Solution::add_binary("1111".to_string(), "1111".to_string()),
             "11110".to_string()
         );
+        let s = "12345".to_string();
+        let len = s.len() - 1;
+        let mut cs = s.chars();
+        println!("{:?}", cs);
+        for i in 0..len {
+            println!("{:?}, {:?}", cs.nth(len - i), cs);
+        }
+
         let ten = "10".to_string();
         let one = "1".to_string();
         assert_eq!(one + &ten, "110".to_string());
+        assert_eq!(ten.chars().nth(0).unwrap(), '1');
     }
     #[test]
     fn reverse_prefix() {
