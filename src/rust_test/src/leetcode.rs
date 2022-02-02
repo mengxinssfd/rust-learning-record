@@ -139,14 +139,14 @@ fn tree() {
                 let mut val = num1 + num2 + carry;
                 carry = (val / 2) as u8;
                 val = val % 2;
-                res.insert(0,char::from(val+48));
+                res.insert(0,(val + 48) as char);
 
                 len1 -= 1;
                 len2 -= 1;
             }
 
             if carry > 0 {
-                res.insert(0,char::from(49));
+                res.insert(0,49 as char);
             }
 
             res
