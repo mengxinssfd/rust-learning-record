@@ -129,24 +129,24 @@ fn tree() {
             let mut carry = 0;
             let mut res = String::from("");
 
+            let a = a.as_bytes();
+            let b = b.as_bytes();
+
             while len1 > -1 || len2 > -1 {
-                let num1 = a.chars().nth(len1 as usize).unwrap_or('0');
-                println!("{}, {}", len1, num1);
-                let num1 = num1.to_digit(10).unwrap();
-                let num2 = b.chars().nth(len2 as usize).unwrap_or('0');
-                let num2 = num2.to_digit(10).unwrap();
+                let num1 = *a.get(len1 as usize).unwrap_or(&48) - 48;
+                let num2 = *b.get(len2 as usize).unwrap_or(&48) - 48;
 
                 let mut val = num1 + num2 + carry;
-                carry = (val / 2) as u32;
+                carry = (val / 2) as u8;
                 val = val % 2;
-                res = val.to_string() + &res;
+                res.insert(0,char::from(val+48));
 
                 len1 -= 1;
                 len2 -= 1;
             }
 
             if carry > 0 {
-                return "1".to_string() + &res;
+                res.insert(0,char::from(49));
             }
 
             res
@@ -170,6 +170,12 @@ mod test {
         for i in 0..len {
             println!("{:?}, {:?}", cs.nth(len - i), cs);
         }
+
+        for &b in "12345".as_bytes(){
+            println!("b {}", b - 48);
+        }
+
+        println!("bytes{:?}", "12345".as_bytes());
 
         let ten = "10".to_string();
         let one = "1".to_string();
