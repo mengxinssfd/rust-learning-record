@@ -114,11 +114,43 @@ fn tree() {
             match i {
                 None => word,
                 Some(i) => {
-                    let prefix = (&word[..i+1]).chars().rev().collect::<String>();
+                    let prefix = (&word[..i + 1]).chars().rev().collect::<String>();
                     let affix = &word[i + 1..];
                     prefix + affix
                 }
             }
+        }
+
+        /// 67. 二进制求和
+        pub fn add_binary(a: String, b: String) -> String {
+            let mut len1 = (a.len() - 1) as i32;
+            let mut len2 = (b.len() - 1) as i32;
+
+            let mut carry = 0;
+            let mut res = String::from("");
+
+            let a = a.chars().collect::<Vec<char>>();
+            let b = b.chars().collect::<Vec<char>>();
+            while len1 > -1 || len2 > -1 {
+                let num1 = *a.get(len1 as usize).unwrap_or(&'0');
+                let num1 = num1.to_digit(10).unwrap();
+                let num2 = *b.get(len2 as usize).unwrap_or(&'0');
+                let num2 = num2.to_digit(10).unwrap();
+
+                let mut val = num1 + num2 + carry;
+                carry = (val / 2) as u32;
+                val = val % 2;
+                res = val.to_string() + &res;
+
+                len1 -= 1;
+                len2 -= 1;
+            }
+
+            if carry > 0 {
+                return "1".to_string() + &res;
+            }
+
+            res
         }
     }
 }
@@ -126,6 +158,16 @@ fn tree() {
 #[cfg(test)]
 mod test {
     use crate::leetcode::Solution;
+    #[test]
+    fn add_binary() {
+        assert_eq!(
+            Solution::add_binary("1111".to_string(), "1111".to_string()),
+            "11110".to_string()
+        );
+        let ten = "10".to_string();
+        let one = "1".to_string();
+        assert_eq!(one + &ten, "110".to_string());
+    }
     #[test]
     fn reverse_prefix() {
         assert_eq!(
