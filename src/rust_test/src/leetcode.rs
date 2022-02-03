@@ -139,17 +139,27 @@ fn tree() {
                 let mut val = num1 + num2 + carry;
                 carry = (val / 2) as u8;
                 val = val % 2;
-                res.insert(0,(val + 48) as char);
+                res.insert(0, (val + 48) as char);
 
                 len1 -= 1;
                 len2 -= 1;
             }
 
             if carry > 0 {
-                res.insert(0,49 as char);
+                res.insert(0, 49 as char);
             }
 
             res
+        }
+
+        /// 389. 找不同  // https://leetcode-cn.com/problems/find-the-difference/
+        pub fn find_the_difference(s: String, t: String) -> char {
+            let mut arr: [i8; 26] = [0; 26];
+            let a = 'a' as usize;
+            s.chars().for_each(|c| arr[(c as usize) - a] += 1);
+            t.chars().for_each(|c| arr[(c as usize) - a] -= 1);
+            let i = arr.iter().position(|&v| v == -1).unwrap();
+            (a as u8 + i as u8) as char
         }
     }
 }
@@ -158,8 +168,16 @@ fn tree() {
 mod test {
     use crate::leetcode::Solution;
     #[test]
+    fn find_the_difference(){
+        assert_eq!(
+            Solution::find_the_difference("abcd".to_string(),
+                                 "abcde".to_string()),
+            'e'
+        );
+    }
+    #[test]
     fn add_binary() {
-         assert_eq!(
+        assert_eq!(
             Solution::add_binary("1111".to_string(), "1111".to_string()),
             "11110".to_string()
         );
@@ -171,7 +189,7 @@ mod test {
             println!("{:?}, {:?}", cs.nth(len - i), cs);
         }
 
-        for &b in "12345".as_bytes(){
+        for &b in "12345".as_bytes() {
             println!("b {}", b - 48);
         }
 
