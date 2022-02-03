@@ -161,6 +161,20 @@ fn tree() {
             let i = arr.iter().position(|&v| v == -1).unwrap();
             (a as u8 + i as u8) as char
         }
+
+        pub fn majority_element(nums: Vec<i32>) -> i32 {
+            let mut map = HashMap::new();
+            nums.iter().for_each(|n| {
+                map.insert(n, map.get(n).unwrap_or(&0) + 1);
+            });
+            let half = nums.len() / 2;
+            for (k, &v) in map.iter() {
+                if v > half {
+                    return **k;
+                }
+            }
+            0
+        }
     }
 }
 
@@ -168,10 +182,13 @@ fn tree() {
 mod test {
     use crate::leetcode::Solution;
     #[test]
-    fn find_the_difference(){
+    fn majority_element() {
+        assert_eq!(Solution::majority_element(vec![3, 2, 3]), 3);
+    }
+    #[test]
+    fn find_the_difference() {
         assert_eq!(
-            Solution::find_the_difference("abcd".to_string(),
-                                 "abcde".to_string()),
+            Solution::find_the_difference("abcd".to_string(), "abcde".to_string()),
             'e'
         );
     }
