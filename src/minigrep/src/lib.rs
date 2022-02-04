@@ -25,7 +25,7 @@ impl Config {
 
         let query = match args.next() {
             Some(s) => s,
-            None => return Err("Didn't get a query string"),
+            None => return Err("Didn't get a query string.rs"),
         };
         let filename = match args.next() {
             Some(s) => s,
