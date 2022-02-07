@@ -78,6 +78,22 @@ mod test {
                 }
             }
         }
+
+        let mut i = 0;
+        let rt = loop {
+            if i == 5 {
+                break i;
+            }
+            i += 1;
+        };
+        println!("loop return value is {}", rt);
+
+        // let rt = for i in 0..10 {
+        //     if i == 5 {
+        //         break i; //  can only break with a value inside `loop` or breakable block
+        //     }
+        // };
+        // println!("{:?}", rt);
     }
 
     #[test]
