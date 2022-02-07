@@ -26,20 +26,32 @@ impl Solution {
         }
         res
     }
+
+    /// 88. 合并两个有序数组  // https://leetcode-cn.com/problems/merge-sorted-array/
+    pub fn merge(nums1: &mut Vec<i32>, m: i32, nums2: &mut Vec<i32>, n: i32) {
+        let m = m as usize;
+        let n = n as usize;
+        for i in 0..n {
+            // nums1[m + i] = nums2[i]; // get(i).unwrap()比[i]要省空间
+            nums1[m + i] = *nums2.get(i).unwrap();
+        }
+        nums1.sort();
+    }
 }
 
 #[cfg(test)]
 mod test {
     use super::Solution;
+    #[test]
+    fn merge() {
+        let mut nums1 = vec![1, 2, 3, 0, 0, 0];
 
+        Solution::merge(&mut nums1, 3, &mut vec![2, 5, 6], 3);
+
+        assert_eq!(nums1, vec![1, 2, 2, 3, 5, 6]);
+    }
     #[test]
     fn generate() {
-        for i in 1..6 {
-            println!("1,{}", i);
-        }
-        for i in 1..=6 {
-            println!("2,{}", i);
-        }
         assert_eq!(
             Solution::generate(5),
             vec![
