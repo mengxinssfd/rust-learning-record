@@ -33,6 +33,7 @@ impl Solution {
         let n = n as usize;
         for i in 0..n {
             // nums1[m + i] = nums2[i]; // get(i).unwrap()比[i]要省空间
+            // nums1[m + i] = *nums2.get(i)?; // 需要当前函数返回Option才有用
             nums1[m + i] = *nums2.get(i).unwrap();
         }
         nums1.sort();
@@ -98,6 +99,13 @@ mod test {
 
     #[test]
     fn merge() {
+        fn test(n: i32) {
+            let n = n as usize;
+            println!("n, {}", n); // 18446744073709551615
+        }
+
+        test(-1);
+
         let mut nums1 = vec![1, 2, 3, 0, 0, 0];
 
         Solution::merge(&mut nums1, 3, &mut vec![2, 5, 6], 3);
