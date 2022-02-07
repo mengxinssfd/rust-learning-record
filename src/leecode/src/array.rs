@@ -42,6 +42,32 @@ impl Solution {
 #[cfg(test)]
 mod test {
     use super::Solution;
+
+    fn foreach_test() {
+        println!("遍历");
+        for i in 1..6 {
+            println!("1,{}", i);
+        }
+        println!("遍历(包含右侧)");
+        for i in 1..=6 {
+            println!("2,{}", i);
+        }
+        println!("反向遍历");
+        for i in (1..=6).rev() {
+            println!("3,{}", i);
+        }
+
+        println!("遍历array");
+        for i in [1, 3, 5, 7, 9] {
+            println!("arr, {}", i);
+        }
+
+        println!("遍历vec");
+        for i in vec![1, 3, 5, 7, 9] {
+            println!("vec, {}", i);
+        }
+    }
+
     #[test]
     fn merge() {
         let mut nums1 = vec![1, 2, 3, 0, 0, 0];
