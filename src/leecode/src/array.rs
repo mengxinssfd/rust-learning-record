@@ -43,6 +43,7 @@ impl Solution {
 mod test {
     use super::Solution;
 
+    #[test]
     fn foreach_test() {
         println!("遍历");
         for i in 1..6 {
@@ -65,6 +66,17 @@ mod test {
         println!("遍历vec");
         for i in vec![1, 3, 5, 7, 9] {
             println!("vec, {}", i);
+        }
+
+        println!("10 break 5");
+        'outer: for i in 0..=10 {
+            println!("outer{}", i);
+            for j in 0..5 {
+                println!("inner{}", j);
+                if j == 3 {
+                    break 'outer;
+                }
+            }
         }
     }
 
