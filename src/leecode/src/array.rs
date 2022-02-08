@@ -1,5 +1,6 @@
 use crate::solution::Solution;
 use std::collections::HashMap;
+use std::collections::HashSet;
 
 impl Solution {
     pub fn majority_element(nums: Vec<i32>) -> i32 {
@@ -48,7 +49,7 @@ impl Solution {
 
         // todo 想办法优化太多的as usize
         while m >= 0 || n >= 0 {
-            let cur: i32;
+            let cur;
             if m < 0 {
                 cur = nums2[n as usize];
                 n -= 1;
@@ -63,12 +64,35 @@ impl Solution {
             i -= 1;
         }
     }
+
+    /// 217. 存在重复元素 // https://leetcode-cn.com/problems/contains-duplicate/
+    /// 使用HashSet
+    pub fn contains_duplicate(nums: Vec<i32>) -> bool {
+        let mut set = HashSet::new();
+        // insert 向集合中添加一个值。
+        // 如果该集合不存在此值，则返回true 。
+        // 如果该集合确实存在此值，则返回false
+        nums.iter().any(|n| !set.insert(n))
+    }
+    pub fn contains_duplicate_v2(nums: Vec<i32>) -> bool {
+        let mut nums = nums;
+        nums.sort();
+        nums.windows(2).any(|w| w[0] == w[1])
+    }
 }
 
 #[cfg(test)]
 mod test {
     use super::Solution;
 
+    #[test]
+    fn contains_duplicate() {
+        assert_eq!(Solution::contains_duplicate(vec![1, 2, 3, 1]), true);
+        assert_eq!(Solution::contains_duplicate(vec![1, 2, 3, 4]), false);
+
+        assert_eq!(Solution::contains_duplicate_v2(vec![1, 2, 3, 1]), true);
+        assert_eq!(Solution::contains_duplicate_v2(vec![1, 2, 3, 4]), false);
+    }
     #[test]
     fn foreach_test() {
         println!("遍历");
