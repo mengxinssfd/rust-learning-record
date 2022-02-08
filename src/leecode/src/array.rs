@@ -38,6 +38,31 @@ impl Solution {
         }
         nums1.sort();
     }
+    /// 倒序插入
+    pub fn merge_v2(nums1: &mut Vec<i32>, m: i32, nums2: &mut Vec<i32>, n: i32) {
+        let mut i = m + n - 1;
+        let mut m = m - 1;
+        let mut n = n - 1;
+        // nums1.resize(i as usize, 0);
+        // i -= 1;
+
+        // todo 想办法优化太多的as usize
+        while m >= 0 || n >= 0 {
+            let cur: i32;
+            if m < 0 {
+                cur = nums2[n as usize];
+                n -= 1;
+            } else if n < 0 || nums1[m as usize] > nums2[n as usize] {
+                cur = nums1[m as usize];
+                m -= 1;
+            } else {
+                cur = nums2[n as usize];
+                n -= 1;
+            }
+            nums1[i as usize] = cur;
+            i -= 1;
+        }
+    }
 }
 
 #[cfg(test)]
@@ -98,20 +123,41 @@ mod test {
     }
 
     #[test]
-    fn merge() {
-        fn test(n: i32) {
-            let n = n as usize;
-            println!("n, {}", n); // 18446744073709551615
+    fn usize_test() {
+        // 测试负数转为usize
+        fn test(n: i32) -> usize {
+            n as usize
         }
+        assert_eq!(test(-1), 18446744073709551615);
+        assert_eq!(test(-2), 18446744073709551614);
+    }
 
-        test(-1);
+    #[test]
+    fn index_out_test() {
+        let mut v = vec![0, 1, 2];
 
+        // 需要重新设置size和默认值  否则报错
+        v.resize(6, 0);
+        v[5] = 5;
+        assert_eq!(v, vec![0, 1, 2, 0, 0, 5]);
+
+        // 保留小数位测试
+        let n = format!("{:.3}", 1.123456);
+        assert_eq!(n, "1.123".to_string())
+    }
+
+    #[test]
+    fn merge() {
         let mut nums1 = vec![1, 2, 3, 0, 0, 0];
 
         Solution::merge(&mut nums1, 3, &mut vec![2, 5, 6], 3);
+        assert_eq!(nums1, vec![1, 2, 2, 3, 5, 6]);
 
+        let mut nums1 = vec![1, 2, 3, 0, 0, 0];
+        Solution::merge_v2(&mut nums1, 3, &mut vec![2, 5, 6], 3);
         assert_eq!(nums1, vec![1, 2, 2, 3, 5, 6]);
     }
+
     #[test]
     fn generate() {
         assert_eq!(
@@ -121,7 +167,7 @@ mod test {
                 vec![1, 1],
                 vec![1, 2, 1],
                 vec![1, 3, 3, 1],
-                vec![1, 4, 6, 4, 1]
+                vec![1, 4, 6, 4, 1],
             ]
         );
     }
