@@ -63,11 +63,62 @@ impl Solution {
             i -= 1;
         }
     }
+
+    /// 136. 只出现一次的数字 // https://leetcode-cn.com/problems/single-number/
+    /// HashMap计数
+    pub fn single_number_v1(nums: Vec<i32>) -> i32 {
+        let mut map = HashMap::new();
+        nums.iter().for_each(|&n| {
+            map.insert(n, map.get(&n).unwrap_or(&0) + 1);
+        });
+        map.iter().find_map(|(k, v)| {
+            if v == &1 {
+                return Some(*k);
+            }
+            None
+        }).unwrap()
+    }
+    /// 位移  根据说明：`你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？` ，只有位移是对的
+    pub fn single_number_v2(nums: Vec<i32>) -> i32 {
+        let res = nums.iter().fold(0, |pre, cur| pre ^ cur);
+        // into_iter会改变nums的所有权
+        // let res = nums.into_iter().reduce(|pre, cur| pre ^ &cur).unwrap();
+        // println!("{:?}", nums); // into_iter 报错 value borrowed here after move
+        res
+    }
+    /// 排序
+    pub fn single_number_v3(mut nums: Vec<i32>) -> i32 {
+        if nums.len() == 1 {
+            return nums[0];
+        }
+        nums.sort();
+        for i in 0..nums.len() as i32 {
+            let pre = nums.get((i - 1) as usize);
+            let cur = nums.get(i as usize);
+            let next = nums.get(i as usize + 1);
+            match (pre, cur, next) {
+                (None, Some(a), Some(b)) if a != b => return *a,
+                (Some(a), Some(b), Some(c)) if b != a && b != c => return *b,
+                (Some(a), Some(b), None) if a != b => return *b,
+                _ => {}
+            }
+        }
+        0
+    }
 }
 
 #[cfg(test)]
 mod test {
     use super::Solution;
+
+    #[test]
+    fn single_number() {
+        assert_eq!(Solution::single_number_v1(vec![2, 2, 1]), 1);
+        assert_eq!(Solution::single_number_v2(vec![2, 2, 1]), 1);
+        assert_eq!(Solution::single_number_v3(vec![2, 2, 1]), 1);
+        assert_eq!(Solution::single_number_v3(vec![4, 1, 2, 1, 2]), 4);
+        assert_eq!(Solution::single_number_v3(vec![1]), 1);
+    }
 
     #[test]
     fn foreach_test() {
