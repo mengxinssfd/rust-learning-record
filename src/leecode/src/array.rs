@@ -121,11 +121,31 @@ impl Solution {
         }
         0
     }
+
+
+    /// 2006. 差的绝对值为 K 的数对数目 // https://leetcode-cn.com/problems/count-number-of-pairs-with-absolute-difference-k/
+    /// 暴力解法
+    pub fn count_k_difference_v1(nums: Vec<i32>, k: i32) -> i32 {
+        let mut res = 0;
+        for i in 0..nums.len() {
+            for j in (i + 1)..nums.len() {
+                if (nums[i] - nums[j]).abs() == k {
+                    res += 1;
+                }
+            }
+        }
+        res
+    }
 }
 
 #[cfg(test)]
 mod test {
     use super::Solution;
+
+    #[test]
+    fn count_k_difference() {
+        assert_eq!(Solution::count_k_difference_v1(vec![1, 2, 2, 1], 1), 4);
+    }
 
     #[test]
     fn single_number() {
@@ -144,6 +164,7 @@ mod test {
         assert_eq!(Solution::contains_duplicate_v2(vec![1, 2, 3, 1]), true);
         assert_eq!(Solution::contains_duplicate_v2(vec![1, 2, 3, 4]), false);
     }
+
     #[test]
     fn foreach_test() {
         println!("遍历");
