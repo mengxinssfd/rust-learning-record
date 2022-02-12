@@ -94,7 +94,7 @@ impl Solution {
             None
         }).unwrap()
     }
-    /// 位移  根据说明：`你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？` ，只有位移是对的
+    // 位移  根据说明：`你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？` ，只有位移是对的
     pub fn single_number_v2(nums: Vec<i32>) -> i32 {
         let res = nums.iter().fold(0, |pre, cur| pre ^ cur);
         // into_iter会改变nums的所有权
@@ -102,7 +102,7 @@ impl Solution {
         // println!("{:?}", nums); // into_iter 报错 value borrowed here after move
         res
     }
-    /// 排序
+    // 排序
     pub fn single_number_v3(mut nums: Vec<i32>) -> i32 {
         if nums.len() == 1 {
             return nums[0];
@@ -124,7 +124,7 @@ impl Solution {
 
 
     /// 2006. 差的绝对值为 K 的数对数目 // https://leetcode-cn.com/problems/count-number-of-pairs-with-absolute-difference-k/
-    /// 暴力解法
+    // 暴力解法
     pub fn count_k_difference_v1(nums: Vec<i32>, k: i32) -> i32 {
         let mut res = 0;
         for i in 0..nums.len() {
@@ -136,6 +136,18 @@ impl Solution {
         }
         res
     }
+    // HashMap解法
+    pub fn count_k_difference_v2(nums: Vec<i32>, k: i32) -> i32 {
+        let mut res = 0;
+        let mut map = HashMap::new();
+        // nums.into_iter().for_each(|n| {
+        nums.iter().for_each(|n| {
+            res += map.get(&(n - k)).unwrap_or(&0) + map.get(&(n + k)).unwrap_or(&0);
+            // map.insert(n, map.get(n).unwrap_or(&0) + 1);
+            *map.entry(n).or_insert(0) += 1; // 也不省内存
+        });
+        res
+    }
 }
 
 #[cfg(test)]
@@ -145,6 +157,7 @@ mod test {
     #[test]
     fn count_k_difference() {
         assert_eq!(Solution::count_k_difference_v1(vec![1, 2, 2, 1], 1), 4);
+        assert_eq!(Solution::count_k_difference_v2(vec![1, 2, 2, 1], 1), 4);
     }
 
     #[test]
