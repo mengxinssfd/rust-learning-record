@@ -79,11 +79,95 @@ impl Solution {
         nums.sort();
         nums.windows(2).any(|w| w[0] == w[1])
     }
+
+    /// 136. 只出现一次的数字 // https://leetcode-cn.com/problems/single-number/
+    /// HashMap计数
+    pub fn single_number_v1(nums: Vec<i32>) -> i32 {
+        let mut map = HashMap::new();
+        nums.iter().for_each(|&n| {
+            map.insert(n, map.get(&n).unwrap_or(&0) + 1);
+        });
+        map.iter().find_map(|(k, v)| {
+            if v == &1 {
+                return Some(*k);
+            }
+            None
+        }).unwrap()
+    }
+    // 位移  根据说明：`你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？` ，只有位移是对的
+    pub fn single_number_v2(nums: Vec<i32>) -> i32 {
+        let res = nums.iter().fold(0, |pre, cur| pre ^ cur);
+        // into_iter会改变nums的所有权
+        // let res = nums.into_iter().reduce(|pre, cur| pre ^ &cur).unwrap();
+        // println!("{:?}", nums); // into_iter 报错 value borrowed here after move
+        res
+    }
+    // 排序
+    pub fn single_number_v3(mut nums: Vec<i32>) -> i32 {
+        if nums.len() == 1 {
+            return nums[0];
+        }
+        nums.sort();
+        for i in 0..nums.len() as i32 {
+            let pre = nums.get((i - 1) as usize);
+            let cur = nums.get(i as usize);
+            let next = nums.get(i as usize + 1);
+            match (pre, cur, next) {
+                (None, Some(a), Some(b)) if a != b => return *a,
+                (Some(a), Some(b), Some(c)) if b != a && b != c => return *b,
+                (Some(a), Some(b), None) if a != b => return *b,
+                _ => {}
+            }
+        }
+        0
+    }
+
+
+    /// 2006. 差的绝对值为 K 的数对数目 // https://leetcode-cn.com/problems/count-number-of-pairs-with-absolute-difference-k/
+    // 暴力解法
+    pub fn count_k_difference_v1(nums: Vec<i32>, k: i32) -> i32 {
+        let mut res = 0;
+        for i in 0..nums.len() {
+            for j in (i + 1)..nums.len() {
+                if (nums[i] - nums[j]).abs() == k {
+                    res += 1;
+                }
+            }
+        }
+        res
+    }
+    // HashMap解法
+    pub fn count_k_difference_v2(nums: Vec<i32>, k: i32) -> i32 {
+        let mut res = 0;
+        let mut map = HashMap::new();
+        // nums.into_iter().for_each(|n| {
+        nums.iter().for_each(|n| {
+            res += map.get(&(n - k)).unwrap_or(&0) + map.get(&(n + k)).unwrap_or(&0);
+            // map.insert(n, map.get(n).unwrap_or(&0) + 1);
+            *map.entry(n).or_insert(0) += 1; // 也不省内存
+        });
+        res
+    }
 }
 
 #[cfg(test)]
 mod test {
     use super::Solution;
+
+    #[test]
+    fn count_k_difference() {
+        assert_eq!(Solution::count_k_difference_v1(vec![1, 2, 2, 1], 1), 4);
+        assert_eq!(Solution::count_k_difference_v2(vec![1, 2, 2, 1], 1), 4);
+    }
+
+    #[test]
+    fn single_number() {
+        assert_eq!(Solution::single_number_v1(vec![2, 2, 1]), 1);
+        assert_eq!(Solution::single_number_v2(vec![2, 2, 1]), 1);
+        assert_eq!(Solution::single_number_v3(vec![2, 2, 1]), 1);
+        assert_eq!(Solution::single_number_v3(vec![4, 1, 2, 1, 2]), 4);
+        assert_eq!(Solution::single_number_v3(vec![1]), 1);
+    }
 
     #[test]
     fn contains_duplicate() {
@@ -93,6 +177,7 @@ mod test {
         assert_eq!(Solution::contains_duplicate_v2(vec![1, 2, 3, 1]), true);
         assert_eq!(Solution::contains_duplicate_v2(vec![1, 2, 3, 4]), false);
     }
+
     #[test]
     fn foreach_test() {
         println!("遍历");
