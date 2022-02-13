@@ -2,6 +2,7 @@ mod string;
 mod tree;
 mod solution;
 mod array;
+mod list;
 
 #[cfg(test)]
 mod tests {
