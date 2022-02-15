@@ -148,11 +148,23 @@ impl Solution {
         });
         res
     }
+
+    // TODO 未理解透
+    /// 453. 最小操作次数使数组元素相等 // https://leetcode-cn.com/problems/minimum-moves-to-equal-array-elements/
+    pub fn min_moves(nums: Vec<i32>) -> i32 {
+        let min = nums.iter().min().unwrap();
+        nums.iter().fold(0, |prev, n| prev + n - min)
+    }
 }
 
 #[cfg(test)]
 mod test {
     use super::Solution;
+
+    #[test]
+    fn min_moves() {
+        assert_eq!(Solution::min_moves(vec![1, 2, 3]), 3);
+    }
 
     #[test]
     fn count_k_difference() {
