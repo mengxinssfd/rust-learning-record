@@ -16,7 +16,7 @@ impl Solution {
         head
     }
     // 迭代
-    pub fn remove_elements_by_iterator(head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {
+    /*pub fn remove_elements_by_iterator(head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {
         let mut h = Some(Box::new(ListNode::new(0)));
         // 使用'?'少写一个unwrap()
         h.as_mut()?.next = head;
@@ -31,26 +31,20 @@ impl Solution {
         }
 
         h.as_mut()?.next.take()
-    }
-
-    /*pub fn remove_elements_by_iterator(mut head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {
-        let mut h = Some(Box::new(ListNode::new(0)));
-        h.as_mut().unwrap().next = head;
-
-        let mut prev = &mut h;
-        let mut cur = &mut h.as_mut().unwrap().next;
-
-        while cur.is_some()  {
-            if cur.as_ref().unwrap().val == val {
-                prev.as_mut().unwrap().val = 1;
-            } else {
-                prev = cur;
-            }
-            cur = &mut cur.as_mut().unwrap().next;
-        }
-
-        h.as_mut().unwrap().next.take()
     }*/
+
+    pub fn remove_elements_by_iterator(head: Option<Box<ListNode>>, val: i32) -> Option<Box<ListNode>> {
+        let mut root = ListNode { val: 0, next: head };
+        let mut head = &mut root;
+        while let Some(ref mut cur) = head.next {
+            if cur.val == val {
+                head.next = cur.next.take();
+            } else {
+                head = head.next.as_mut()?;
+            }
+        }
+        root.next
+    }
 }
 
 #[cfg(test)]
