@@ -19,3 +19,14 @@ pub fn string_test() {
 fn substr(s: &str, start: usize, length: usize) -> String {
     s.chars().skip(start).take(length).collect()
 }
+
+#[cfg(test)]
+pub mod test {
+    #[test]
+    fn test() {
+        let w = "world";
+        // 字符串模板
+        let s = format!("hello {w}!");
+        assert_eq!(s, "hello world!".to_string());
+    }
+}
